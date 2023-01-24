@@ -1,30 +1,35 @@
 const express = require('express')
 const cors = require("cors");
-const db = require("../db/connection");
+const dbSistemaITE = require("../db/db_sistema_ite_connection");
+const dbChatbotAiITE = require("../db/db_chatbot_ai_ite_connection");
 
 class Server {
 
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        this.userApiPath = '/api/users';
+        this.personaApiPath = '/api/persona';
+        this.usersApiPath = '/api/users';
 
-        this.dbConnection();
+        this.dbSistemaiteConnection().then(r => console.log('---dbSistemaiteConnection : ' + r));
+        this.dbChatbotAiITEConnection().then(r => console.log('---dbChatbotAiITEConnection : ' + r));
         this.middlewares();
         this.routes();
     }
 
-    async dbConnection() {
+    async dbChatbotAiITEConnection() {
         try {
-            await db.authenticate();
+            await dbChatbotAiITE.authenticate();
         } catch (e) {
-            switch (e) {
-                case 'SequelizeConnectionError':
-                    Error('ERROR en base de datos:'+e);
-                    break;
-                default:
-                    throw Error('ERROR en base de datos DEFAULT:'+e)
-            }
+            throw  Error('Error en base de datos dbChatbotAiITEConnection: ' + e);
+        }
+    }
+
+    async dbSistemaiteConnection() {
+        try {
+            await dbSistemaITE.authenticate();
+        } catch (e) {
+            throw  Error('Error en base de datos dbSistemaiteConnection: ' + e);
         }
 
     }
@@ -41,7 +46,8 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.userApiPath, require('../routes/user'),);
+        this.app.use(this.personaApiPath, require('../routes/persona'),)
+        this.app.use(this.usersApiPath, require('../routes/users'),)
     }
 
     listen() {
