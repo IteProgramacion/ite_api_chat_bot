@@ -1,10 +1,11 @@
-import {DataTypes} from "sequelize";
+const {DataTypes} = require("sequelize");
 
-import dbChatbotAiITE from '../db/db_sistema_ite_connection'
+const dbChatbotAiITE = require('../db/db_sistema_ite_connection');
 
 const Personas = dbChatbotAiITE.define('Personas', {
     cod_id: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        primaryKey: true,
     },
     nombre: {
         type: DataTypes.STRING,
@@ -29,4 +30,15 @@ const Personas = dbChatbotAiITE.define('Personas', {
     },
 });
 
-export default Personas;
+(async () => {
+    try {
+        await Personas.sync();
+        console.log('correct Connection')
+    } catch (e) {
+        console.log(':::::::Error al conectar a la base de datos' + e);
+        throw  new Error('::::::Error al conectar a la base de datos ' + e);
+    }
+
+})();
+
+module.exports = Personas;

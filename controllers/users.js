@@ -1,6 +1,7 @@
 const {response, request} = require('express');
-const dbChatbotAiITE = require("../db/db_chatbot_ai_ite_connection");
+// const dbChatbotAiITE = require("../db/db_chatbot_ai_ite_connection");
 const dbSistemaite = require("../db/db_sistema_ite_connection");
+const Persona = require("../models/persona");
 
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
@@ -17,11 +18,17 @@ const iniciarSesion = async (req = request, res = response) => {
             `SELECT id, nombre, apellidop, apellidom, fechanacimiento, carnet, telefono, habilitado, created_at, updated_at FROM personas WHERE id=(SELECT persona_id FROM estudiantes WHERE persona_id = ${username})`
         );
         if (resPersonaITE.length ===0) {
-            /// El usuario no existe en el Sistema ITE
+            return res.status(404).json({result: 'El usuario no existe, debe inscribirse en ITE'});
+
         }
-        const [resChatbotITE = Array()] = await
+
+        const resChatbotITE = await Persona.findByPk(username);
+        if (resChatbotITE) {
+            console.log(resChatbotITE);
+            return res.status(400).json({result: `El usuario ${username}ya Existe`});
+        }
     } catch (e) {
-        throw SQLException;
+        console.log(e);
     }
     res.json({username: username, password: password})
 }
