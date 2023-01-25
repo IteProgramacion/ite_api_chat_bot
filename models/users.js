@@ -1,8 +1,14 @@
 const {DataTypes} = require("sequelize");
 
-import dbChatbotAiITE from '../db/db_sistema_ite_connection'
+const dbChatbotAiITE = require('../db/db_chatbot_ai_ite_connection');
 
-const Users = dbChatbotAiITE.define('Users', {
+const Person = require("../models/persona");
+
+const User = dbChatbotAiITE.define('User', {
+    uid: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
     username: {
         type: DataTypes.STRING,
     },
@@ -12,15 +18,15 @@ const Users = dbChatbotAiITE.define('Users', {
 
 });
 
-
 (async () => {
     try {
-        await Users.sync();
-        console.log('correct Connection')
+        await User.sync();
+        console.log('correct Connection Sync User');
     } catch (e) {
         console.log(':::::::Error al conectar a la base de datos' + e);
         throw  new Error('::::::Error al conectar a la base de datos ' + e);
     }
-
 })();
-module.exports = Users;
+
+// User.hasOne(Person, {foreignKey: 'uid', onDelete: 'CASCADE'});
+module.exports = User;
