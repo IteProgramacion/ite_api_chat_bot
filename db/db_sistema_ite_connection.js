@@ -8,7 +8,7 @@ const {Sequelize} = require("sequelize");
 // });
 
 // Configuraciones para Produccion
-const dbSistemaITE = new Sequelize('vaninquz_bd_sistemaite', 'vaninquz_usersistemaite', '', {
+const dbSistemaITE = new Sequelize('vaninquz_bd_sistemaite', 'vaninquz_usersistemaite', '7w}*UR=6KEni', {
     host: 'localhost',
     dialect: 'mysql',
     // logging: false
