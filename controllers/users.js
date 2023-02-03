@@ -1,25 +1,17 @@
 const {response, request} = require('express');
-// const dbChatbotAiITE = require("../db/db_chatbot_ai_ite_connection");
 const dbSistemaite = require("../db/db_sistema_ite_connection");
 const Profile = require("../models/persona");
 const User = require("../models/users");
 
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
-    // TODO:
-    //  [x]4.1 si es correcto retorna perfil y la sesion iniciada
-    //  [x]4.2 si no es correcto, retorna mensaje "usuario o contraseña incorrectos"
     try {
-        // TODO:
-        //  [-]1: si el usuario NO existe en SistemaITE, Debe inscribirse en el instituto.
         const [resPersonaSistemaITE] = await dbSistemaite.query(
             `SELECT id, nombre, apellidop, apellidom, fechanacimiento, carnet, telefono, habilitado, created_at, updated_at FROM personas WHERE id=(SELECT persona_id FROM estudiantes WHERE persona_id = ${username})`
         );
         if (resPersonaSistemaITE.length === 0) {
             return res.status(404).json({result: 'El usuario no existe, debe inscribirse en ITE'});
         }
-        // TODO:
-        //  [x]2: si el usuario existe en SistemaITE, entonces verifica en ChatbotITE.
         const resChatbotITE = await Profile.findByPk(username);
         if (resChatbotITE) {
             //si resChatbotITE es null,:entonces no existe en base de datos
@@ -32,9 +24,6 @@ const iniciarSesion = async (req = request, res = response) => {
                 return res.status(401).json({result: `Contraseña incorrecta para el usuario: ${username}`});
             }
         } else {
-            //TODO
-            //  [x]3: [debe existir en SistemaITE] si NO existe en ChatbotITE, lo registra en el ChatbotITE...
-            //  [x]3.1  y le crea un usuario basado en user = persona_id, password = {this.password}
             const resCreateProfileInChatbotITE = await Profile.create({
                 uid: resPersonaSistemaITE[0].id,
                 nombre: resPersonaSistemaITE[0].nombre,
@@ -54,14 +43,12 @@ const iniciarSesion = async (req = request, res = response) => {
 
             return res.json({result: resCreateUserInChatbotITE, profile: resCreateProfileInChatbotITE});
         }
-        //TODO:
-        //  [x]4: [debe existir en SistemaITE] si Existe en ChatbotITE, verifica el username y password sean correctos...
     } catch (e) {
-console.log(e)
+        console.log(e)
     }
 }
 
-const userSearch = async  (req = request, res = response) =>{
+const userSearch = async (req = request, res = response) => {
     const {username} = req.body;
     try {
         const [resPersonaSistemaITE] = await dbSistemaite.query(
@@ -76,12 +63,46 @@ const userSearch = async  (req = request, res = response) =>{
         if (resChatbotITE) {//Si existe el objeto en Profile
             return res.status(200).json({result: resChatbotITE});
         } else {//Si no existe el objeto en Profile
-            return res.status(404).json({result: resChatbotITE, message: "se  debe crear una contraseña para el usuario"});
+            return res.status(404).json({
+                result: resChatbotITE,
+                message: "se  debe crear una contraseña para el usuario"
+            });
         }
     } catch (e) {
         return res.json(e);
     }
 }
 
-// const registrarUsuario = ()=>{}
-module.exports = {iniciarSesion, userSearch};
+const userRegister = async (req = request, res = response) => {
+    const {profile, password} = req.body;
+    try {
+        const resCreateProfile = await Profile.create(profile);
+        console.log("--------------------------" + resCreateProfile)
+        const resCreateUser = await User.create({
+            uid: resCreateProfile.uid,
+            username: resCreateProfile.uid,
+            password: password
+        })
+        res.status(200).json({result: resCreateUser, profile: resCreateProfile})
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const userLogin = async (req = request, res = response) => {
+    const {username, password} = req.body;
+    try {
+        const resUser = await User.findByPk(username)
+        if (resUser) {
+            if (resUser.password === password) {
+                const resProfile = await Profile.findByPk(username);
+                return res.status(200).json({result: resUser, profile: resProfile})
+            } else {
+                return res.status(401).json({result: `Contraseña incorrecta para el usuario: ${username}`});
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+module.exports = {iniciarSesion, userSearch, userRegister, userLogin};
