@@ -3,7 +3,6 @@ const {response, request} = require('express');
 const dbSistemaite = require("../db/db_sistema_ite_connection");
 const Profile = require("../models/persona");
 const User = require("../models/users");
-const {json} = require("sequelize");
 
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
@@ -36,11 +35,6 @@ const iniciarSesion = async (req = request, res = response) => {
             //TODO
             //  [x]3: [debe existir en SistemaITE] si NO existe en ChatbotITE, lo registra en el ChatbotITE...
             //  [x]3.1  y le crea un usuario basado en user = persona_id, password = {this.password}
-            const resCreateUserInChatbotITE = await User.create({
-                uid: resPersonaSistemaITE[0].id,
-                username: resPersonaSistemaITE[0].id,
-                password: password
-            });
             const resCreateProfileInChatbotITE = await Profile.create({
                 uid: resPersonaSistemaITE[0].id,
                 nombre: resPersonaSistemaITE[0].nombre,
@@ -52,12 +46,42 @@ const iniciarSesion = async (req = request, res = response) => {
                 habilitado: resPersonaSistemaITE[0].habilitado,
 
             });
+            const resCreateUserInChatbotITE = await User.create({
+                uid: resPersonaSistemaITE[0].id,
+                username: resPersonaSistemaITE[0].id,
+                password: password
+            });
+
             return res.json({result: resCreateUserInChatbotITE, profile: resCreateProfileInChatbotITE});
         }
         //TODO:
         //  [x]4: [debe existir en SistemaITE] si Existe en ChatbotITE, verifica el username y password sean correctos...
     } catch (e) {
-        console.log(e);
+console.log(e)
     }
 }
-module.exports = {iniciarSesion};
+
+const userSearch = async  (req = request, res = response) =>{
+    const {username} = req.body;
+    try {
+        const [resPersonaSistemaITE] = await dbSistemaite.query(
+            `SELECT id, nombre, apellidop, apellidom, fechanacimiento, carnet, telefono, habilitado, created_at, updated_at FROM personas WHERE id=(SELECT persona_id FROM estudiantes WHERE persona_id = ${username})`
+        );
+
+        if (resPersonaSistemaITE.length === 0) {
+            return res.status(404).json({result: 'El usuario no existe, debe inscribirse en ITE'});
+        }
+
+        const resChatbotITE = await Profile.findByPk(username);
+        if (resChatbotITE) {//Si existe el objeto en Profile
+            return res.status(200).json({result: resChatbotITE});
+        } else {//Si no existe el objeto en Profile
+            return res.status(404).json({result: resChatbotITE, message: "se  debe crear una contraseña para el usuario"});
+        }
+    } catch (e) {
+        return res.json(e);
+    }
+}
+
+// const registrarUsuario = ()=>{}
+module.exports = {iniciarSesion, userSearch};
