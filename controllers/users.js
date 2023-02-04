@@ -69,7 +69,7 @@ const userSearch = async (req = request, res = response) => {
             });
         }
     } catch (e) {
-        return res.json(e);
+        return res.status(400).json({result: `Informacion incorrecta para el estudiante: ${username}`});
     }
 }
 
