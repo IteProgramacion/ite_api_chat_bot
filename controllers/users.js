@@ -63,8 +63,8 @@ const userSearch = async (req = request, res = response) => {
         if (resChatbotITE) {//Si existe el objeto en Profile
             return res.status(200).json({result: resChatbotITE});
         } else {//Si no existe el objeto en Profile
-            return res.status(404).json({
-                result: resChatbotITE,
+            return res.status(202).json({
+                result: resPersonaSistemaITE,
                 message: "se  debe crear una contraseña para el usuario"
             });
         }
@@ -76,11 +76,21 @@ const userSearch = async (req = request, res = response) => {
 const userRegister = async (req = request, res = response) => {
     const {profile, password} = req.body;
     try {
-        const resCreateProfile = await Profile.create(profile);
-        console.log("--------------------------" + resCreateProfile)
+        /// TODO: Falta acomodar los valos para el Create en funcion del modelo Profile
+        console.log(`Profile: ${JSON.stringify(req.body["profile"].id, null, 2)}`)
+        const resCreateProfile = await Profile.create({
+            uid: profile.id,
+            nombre: profile.nombre,
+            apellidop: profile.apellidop,
+            apellidom: profile.apellidom,
+            fechanacimiento: profile.fechanacimiento,
+            carnet: profile.carnet,
+            telefono: profile.telefono,
+            habilitado: profile.habilitado,
+            });
         const resCreateUser = await User.create({
-            uid: resCreateProfile.uid,
-            username: resCreateProfile.uid,
+            uid: profile.id,
+            username:  profile.id,
             password: password
         })
         res.status(200).json({result: resCreateUser, profile: resCreateProfile})
