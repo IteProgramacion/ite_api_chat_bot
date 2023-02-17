@@ -30,6 +30,9 @@ const Profile = dbChatbotAiITE.define('Profile', {
     habilitado: {
         type: DataTypes.INTEGER,
     },
+    isIte: {
+        type: DataTypes.BOOLEAN
+    }
 });
 
 (async () => {

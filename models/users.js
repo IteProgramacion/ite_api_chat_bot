@@ -3,6 +3,8 @@ const {DataTypes} = require("sequelize");
 const dbChatbotAiITE = require('../db/db_chatbot_ai_ite_connection');
 
 const Person = require("../models/persona");
+const Payments = require("../models/pyments");
+const Credits = require("../models/credits");
 
 const User = dbChatbotAiITE.define('User', {
     uid: {
@@ -28,5 +30,7 @@ const User = dbChatbotAiITE.define('User', {
     }
 })();
 
-// User.hasOne(Person, {foreignKey: 'uid', onDelete: 'CASCADE'});
+User.belongsTo(Person);
+User.hasOne(Payments);
+User.hasOne(Credits);
 module.exports = User;
