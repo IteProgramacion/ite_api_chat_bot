@@ -1,25 +1,21 @@
-const {DataTypes} = require("sequelize");
+const {DataTypes, Model} = require("sequelize");
 
 const dbChatbotAiITE = require('../../db/db_chatbot_ai_ite_connection');
 
-const Person = require("./persona");
-const Payments = require("../payments_and_credits/pyments");
-const Credits = require("../payments_and_credits/credits");
-const Groups = require("../chats/groups");
-const Members = require("../chats/members");
+const Profile = require("./profile");
 
-const User = dbChatbotAiITE.define('User', {
-    uid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-    },
+class User extends Model {
+
+}
+
+User.init({
     username: {
         type: DataTypes.STRING,
-    },
-    password: {
+    }, password: {
         type: DataTypes.STRING,
     },
-
+}, {
+    sequelize: dbChatbotAiITE, modelName: 'User',
 });
 
 (async () => {
@@ -32,8 +28,7 @@ const User = dbChatbotAiITE.define('User', {
     }
 })();
 
-User.belongsToMany(Groups, {through: Members});
-User.belongsTo(Person);
-User.hasMany(Payments);
-User.hasOne(Credits);
+Profile.hasOne(User)
+User.belongsTo(Profile);
+
 module.exports = User;

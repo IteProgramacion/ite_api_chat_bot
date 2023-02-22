@@ -1,12 +1,16 @@
-const {DataTypes} = require("sequelize");
+const {DataTypes, Model} = require("sequelize");
+
 const dbChatbotAiITE = require('../../db/db_chatbot_ai_ite_connection');
-const Members = require('members');
-const Users = require('../users/users');
-const Message = require('message');
-const Groups = dbChatbotAiITE.define('Groups', {
+
+class Groups extends Model {
+}
+
+Groups.init({
     name: {
         type: DataTypes.STRING,
     }
+}, {
+    sequelize: dbChatbotAiITE, modelName: 'Groups'
 });
 
 (async () => {
@@ -17,8 +21,6 @@ const Groups = dbChatbotAiITE.define('Groups', {
         console.log(':::::::Error al conectar a la base de datos' + e);
         throw  new Error('::::::Error al conectar a la base de datos ' + e);
     }
-})()
+})();
 
-Groups.belongsToMany(Users,{through: Members})
-Groups.hasOne(Message);
 module.exports = Groups;

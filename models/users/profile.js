@@ -1,44 +1,37 @@
-const {DataTypes} = require("sequelize");
+const {DataTypes, Model} = require("sequelize");
 
 const dbChatbotAiITE = require('../../db/db_chatbot_ai_ite_connection');
 
-const User = require("./users");
 
-const Profile = dbChatbotAiITE.define('Profile', {
-    uid: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-    },
+class Profile extends Model {
+}
+
+Profile.init({
     nombre: {
         type: DataTypes.STRING,
-    },
-    apellidop: {
+    }, apellidop: {
         type: DataTypes.STRING,
-    },
-    apellidom: {
+    }, apellidom: {
         type: DataTypes.STRING,
-    },
-    fechanacimiento: {
+    }, fechanacimiento: {
         type: DataTypes.DATE
-    },
-    carnet: {
+    }, carnet: {
         type: DataTypes.STRING,
-    },
-    telefono: {
+    }, telefono: {
         type: DataTypes.STRING,
-    },
-    habilitado: {
+    }, habilitado: {
         type: DataTypes.INTEGER,
-    },
-    isIte: {
+    }, isIte: {
         type: DataTypes.BOOLEAN
     }
+}, {
+    sequelize: dbChatbotAiITE, modelName: 'Profile'
 });
 
 (async () => {
     try {
         await Profile.sync();
-        console.log('correct Connection Sync Persona')
+        console.log('correct Connection Sync Profile')
     } catch (e) {
         console.log(':::::::Error al conectar a la base de datos' + e);
         throw  new Error('::::::Error al conectar a la base de datos ' + e);
@@ -46,5 +39,5 @@ const Profile = dbChatbotAiITE.define('Profile', {
 
 })();
 
-Profile.hasOne(User, {foreignKey: 'uid', onDelete: 'CASCADE'});
+
 module.exports = Profile;

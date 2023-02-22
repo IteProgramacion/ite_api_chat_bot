@@ -1,13 +1,16 @@
-const {DataTypes} = require("sequelize");
+const {DataTypes, Model} = require("sequelize");
 const dbChatbotAiITE = require('../../db/db_chatbot_ai_ite_connection');
 const User = require("../users/users");
-const Payments = dbChatbotAiITE.define('Payments', {
-    // user_uid: {
-    //     type: DataTypes.INTEGER,
-    // },
+
+class Payments extends Model {
+}
+
+Payments.init({
     amount: {
         type: DataTypes.DOUBLE,
     }
+}, {
+    sequelize: dbChatbotAiITE, modelName: 'Payments'
 });
 
 (async () => {
@@ -19,5 +22,7 @@ const Payments = dbChatbotAiITE.define('Payments', {
     }
 })();
 
+User.hasOne(Payments);
 Payments.belongsTo(User);
+
 module.exports = Payments;

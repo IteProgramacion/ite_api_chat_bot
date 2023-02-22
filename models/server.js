@@ -10,6 +10,7 @@ class Server {
         this.port = process.env.PORT;
         this.personaApiPath = '/api/persona';
         this.usersApiPath = '/api/users';
+        this.iteUsersApiPath = '/api/users/ite';
 
         this.dbSistemaiteConnection().then(r => console.log('---dbSistemaiteConnection : ' + r));
         this.dbChatbotAiITEConnection().then(r => console.log('---dbChatbotAiITEConnection : ' + r));
@@ -46,8 +47,9 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.personaApiPath, require('../routes/persona'),)
-        this.app.use(this.usersApiPath, require('../routes/users'),)
+        this.app.use(this.personaApiPath, require('../routes/persona'),);
+        this.app.use(this.usersApiPath, require('../routes/users'),);
+        this.app.use(this.iteUsersApiPath, require('../routes/users_ite'),);
     }
 
     listen() {
