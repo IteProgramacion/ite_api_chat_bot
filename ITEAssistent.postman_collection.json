@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "02232acb-9d58-4622-8975-b9ad0f0a1aff",
+		"name": "ITEAssistent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23045204"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Users ITE",
+					"item": [
+						{
+							"name": "Buscar usuario ITE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/users/ite/userSearch",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"users",
+										"ite",
+										"userSearch"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registrar Usuario ITE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"profile\" : {\r\n            \"id\": 2,\r\n            \"nombre\": \"LIDIA\",\r\n            \"apellidop\": \"CONTRERAS\",\r\n            \"apellidom\": \"CATARI\",\r\n            \"fechanacimiento\": \"2015-05-15\",\r\n            \"carnet\": \"45615535\",\r\n            \"telefono\": \"71039910\",\r\n            \"habilitado\": 1,\r\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n        },\r\n        \"password\":\"asdasda2121qwdqwQW!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/users/ite/userRegister",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"users",
+										"ite",
+										"userRegister"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Iniciar Sesion ITE",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users external",
+					"item": []
+				}
+			]
+		}
+	]
+}
