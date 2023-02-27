@@ -12,8 +12,8 @@ class Server {
         this.usersApiPath = '/api/users';
         this.iteUsersApiPath = '/api/users/ite';
 
-        this.dbSistemaiteConnection().then(r => console.log('---dbSistemaiteConnection : ' + r));
-        this.dbChatbotAiITEConnection().then(r => console.log('---dbChatbotAiITEConnection : ' + r));
+        this.dbSistemaiteConnection().then(r => console.log('---server.js dbSistemaiteConnection : ' + r));
+        this.dbChatbotAiITEConnection().then(r => console.log('------server.js dbChatbotAiITEConnection : ' + r));
         this.middlewares();
         this.routes();
     }
@@ -54,7 +54,6 @@ class Server {
 
     listen() {
         this.app.listen(this.port, () => {
-
             console.log('Servidor corriendo en puerto', this.port);
         });
     }

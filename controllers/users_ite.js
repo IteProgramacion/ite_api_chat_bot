@@ -1,6 +1,6 @@
 const {response, request} = require('express');
 const dbSistemaite = require("../db/db_sistema_ite_connection");
-const {User,Profile} = require("../models/users/users");
+const {User,Profile} = require("../models/users/users_model");
 
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
