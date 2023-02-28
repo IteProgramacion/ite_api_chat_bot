@@ -18,7 +18,7 @@ Profile.init({
     }, telefono: {
         type: DataTypes.STRING,
     }, habilitado: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BOOLEAN,
     }, isIte: {
         type: DataTypes.BOOLEAN
     }

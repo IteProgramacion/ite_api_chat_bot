@@ -1,6 +1,7 @@
 const {response, request} = require('express');
 const dbSistemaite = require("../db/db_sistema_ite_connection");
-const {User,Profile} = require("../models/users/users_model");
+const User = require("../models/users/users_model");
+const Profile = require("../models/users/profile_model");
 
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
@@ -98,7 +99,6 @@ const userRegister = async (req = request, res = response) => {
         /// TODO: Falta acomodar los valos para el Create en funcion del modelo Profile
         console.log(`Profile: ${JSON.stringify(req.body["profile"].id, null, 2)}`)
         const resCreateProfile = await Profile.create({
-            id: profile.id,
             nombre: profile.nombre,
             apellidop: profile.apellidop,
             apellidom: profile.apellidom,
@@ -106,15 +106,28 @@ const userRegister = async (req = request, res = response) => {
             carnet: profile.carnet,
             telefono: profile.telefono,
             habilitado: profile.habilitado,
-        });
+            isIte: true,
+        }).catch(
+            (e) => {
+                console.log('****************************Catch: ' + resCreateProfile);
+                console.log('Catch: '+e);
+
+            }
+        );
+                console.log('****************************despues de Profile.create: ' + resCreateProfile);
         const resCreateUser = await User.create({
-            id: profile.id,
             username: profile.id,
-            password: password
-        })
-        res.status(200).json({result: resCreateUser, profile: resCreateProfile})
+            password: password,
+        });
+                console.log('****************************despues de User.create: ' + resCreateUser);
+        await resCreateUser.setProfile(resCreateProfile);
+
+        res.status(200).json({result: await resCreateUser, profile: await resCreateUser.getProfile()})
     } catch (e) {
-        console.log(e)
+        if ('SequelizeUniqueConstraintError'===e) {
+            console.log('Error de codigo repetido: ' + e );
+        }
+        console.log('algun otro error: '+e);
     }
 }
 
@@ -127,13 +140,16 @@ const userRegister = async (req = request, res = response) => {
 * */
 const userLogin = async (req = request, res = response) => {
     const {username, password} = req.body;
-    //TODO: Revisar por que esta buscando una columna ProfileId y no encuentra la relacion entre las tablas
+    //TODO: Listo para pruebas de funcionamiento y respuesta
     try {
-        const resUser = await User.findByPk(username)
+        //deberia de recuperar el Objeto User + su Objeto Profile; Realizar pruebas
+        const resUser = await User.findOne({where: {username: username}, include: [{model: Profile}]});
+        console.log(resUser);
         if (resUser) {
             if (resUser.password === password) {
-                const resProfile = await Profile.findByPk(username);
-                return res.status(200).json({result: resUser, profile: resProfile})
+                // const resProfile = await Profile.findByPk(username);
+                // return res.status(200).json({result: resUser, profile: resProfile})
+                return res.status(200).json({result: resUser});
             } else {
                 return res.status(401).json({result: `Contraseña incorrecta para el usuario: ${username}`});
             }

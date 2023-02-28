@@ -31,11 +31,12 @@ Members.init({
 
 (async () => {
     try {
-        // User.belongsToMany(Groups,{through: Members});
-        // Groups.belongsToMany(User,{through: Members});
-        //
+        User.hasMany(Members);
+        Members.belongsTo(User);
 
-        await Members.sync({alter:true});
+        Groups.hasMany(Members);
+        Members.belongsTo(Groups);
+        await Members.sync({alter: true});
         console.log('correct Connection Sync Members');
     } catch (e) {
         console.log(':::::::Error al conectar a la base de datos' + e);

@@ -27,13 +27,18 @@ Message_model.init({
 
 (async () => {
     try {
-        await Message_model.sync();
+        User.hasMany(Message_model);
+        Message_model.belongsTo(User);
+
+        Group.hasMany(Message_model);
+        Message_model.belongsTo(Group);
+
+        await Message_model.sync({alter:true});
         console.log('correct Connection Sync Message_model');
     } catch (e) {
         console.log(':::::::Error al conectar a la base de datos' + e);
         throw  new Error('::::::Error al conectar a la base de datos ' + e);
     }
 })();
-User.belongsToMany(Group, {through: Message_model});
-Group.belongsToMany(User, {through: Message_model});
+
 module.exports = Message_model;
