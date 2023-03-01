@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"2\"\r\n}",
+									"raw": "{\r\n    \"username\": 2\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -38,7 +38,74 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Buscar usuario ITE",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": 2,\r\n    \"profile\": \"asd\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}api/users/ite/userSearch",
+											"host": [
+												"{{url}}api"
+											],
+											"path": [
+												"users",
+												"ite",
+												"userSearch"
+											]
+										}
+									},
+									"status": "Accepted",
+									"code": 202,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "310"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"136-f+aSHTeNvm/NAQ9WSTtxnllbFX0\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 28 Feb 2023 18:37:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": [\n        {\n            \"id\": 2,\n            \"nombre\": \"LIDIA\",\n            \"apellidop\": \"CONTRERAS\",\n            \"apellidom\": \"CATARI\",\n            \"fechanacimiento\": \"2015-05-15\",\n            \"carnet\": \"45615535\",\n            \"telefono\": \"71039910\",\n            \"habilitado\": 1,\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\n        }\n    ],\n    \"message\": \"se  debe crear una contraseña para el usuario\"\n}"
+								}
+							]
 						},
 						{
 							"name": "Registrar Usuario ITE",
@@ -47,7 +114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"profile\" : {\r\n            \"id\": 2,\r\n            \"nombre\": \"LIDIA\",\r\n            \"apellidop\": \"CONTRERAS\",\r\n            \"apellidom\": \"CATARI\",\r\n            \"fechanacimiento\": \"2015-05-15\",\r\n            \"carnet\": \"45615535\",\r\n            \"telefono\": \"71039910\",\r\n            \"habilitado\": 1,\r\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n        },\r\n        \"password\":\"asdasda2121qwdqwQW!\"\r\n}",
+									"raw": "{\r\n    \"profile\" : {\r\n            \"id\": 2,\r\n            \"nombre\": \"LIDIA\",\r\n            \"apellidop\": \"CONTRERAS\",\r\n            \"apellidom\": \"CATARI\",\r\n            \"fechanacimiento\": \"2015-05-15\",\r\n            \"carnet\": \"45615535\",\r\n            \"telefono\": \"71039910\",\r\n            \"habilitado\": 1,\r\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n        },\r\n        \"password\": \"123456789\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -64,15 +131,36 @@
 										"ite",
 										"userRegister"
 									]
-								}
+								},
+								"description": "Este endPoint registra exclusivamente a estudiantes activos de ITE\n\nPor tanto la data enviada es extraida unicamente de la Base de Datos de SistemaITE.\n\nel \\[\"id\": #\\] es tambien el username de los estudiantes."
 							},
 							"response": []
 						},
 						{
 							"name": "Iniciar Sesion ITE",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": 2,\r\n    \"password\": \"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/users/ite/userLogin",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"users",
+										"ite",
+										"userLogin"
+									]
+								}
 							},
 							"response": []
 						}
@@ -80,7 +168,63 @@
 				},
 				{
 					"name": "Users external",
-					"item": []
+					"item": [
+						{
+							"name": "Registrar nuevo usuario",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"username4\",\r\n    \"password\": \"asdasdasdas\",\r\n    \"profile\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"EDSON\",\r\n        \"apellidop\": \"MANCILLA\",\r\n        \"apellidom\": \"RODRIGUEZ\",\r\n        \"fechanacimiento\": \"1991-05-15\",\r\n        \"carnet\": \"812345678\",\r\n        \"telefono\": \"71234567\",\r\n        \"habilitado\": true,\r\n        \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n        \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/users/registerUser/",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"users",
+										"registerUser",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Iniciar sesion usuario externo",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":  \"2        \" ,\r\n    \"password\": \"123456789 \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}api/users/userLogin",
+									"host": [
+										"{{url}}api"
+									],
+									"path": [
+										"users",
+										"userLogin"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
