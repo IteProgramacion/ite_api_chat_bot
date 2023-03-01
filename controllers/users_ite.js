@@ -98,6 +98,12 @@ const userRegister = async (req = request, res = response) => {
     try {
         /// TODO: Falta acomodar los valos para el Create en funcion del modelo Profile
         console.log(`Profile: ${JSON.stringify(req.body["profile"].id, null, 2)}`)
+
+        const resCreateUser = await User.create({
+            username: profile.id,
+            password: password,
+        });
+                console.log('****************************despues de User.create: ' + resCreateUser);
         const resCreateProfile = await Profile.create({
             nombre: profile.nombre,
             apellidop: profile.apellidop,
@@ -107,27 +113,18 @@ const userRegister = async (req = request, res = response) => {
             telefono: profile.telefono,
             habilitado: profile.habilitado,
             isIte: true,
-        }).catch(
-            (e) => {
-                console.log('****************************Catch: ' + resCreateProfile);
-                console.log('Catch: '+e);
-
-            }
-        );
-                console.log('****************************despues de Profile.create: ' + resCreateProfile);
-        const resCreateUser = await User.create({
-            username: profile.id,
-            password: password,
         });
-                console.log('****************************despues de User.create: ' + resCreateUser);
+        console.log('****************************despues de Profile.create: ' + resCreateProfile);
         await resCreateUser.setProfile(resCreateProfile);
 
         res.status(200).json({result: await resCreateUser, profile: await resCreateUser.getProfile()})
     } catch (e) {
-        if ('SequelizeUniqueConstraintError'===e) {
-            console.log('Error de codigo repetido: ' + e );
+        if (e.name==='SequelizeUniqueConstraintError') {
+            res.status(409).json({result: 'El registro '+ profile.id + ' ya existe en la base de datos'});
+            return;
+
         }
-        console.log('algun otro error: '+e);
+        res.status(500).json({result: 'Hubo algun error con el username '+ profile.id});
     }
 }
 
@@ -154,7 +151,8 @@ const userLogin = async (req = request, res = response) => {
                 return res.status(401).json({result: `Contraseña incorrecta para el usuario: ${username}`});
             }
         }
-        return res.status(404).json({result: `Informacion incorrecta para el estudiante: ${username}`});
+
+        return res.status(404).json({result: `Informacion incorrecta o el usuario ${username} no existe`});
     } catch (e) {
         console.log(e);
     }
