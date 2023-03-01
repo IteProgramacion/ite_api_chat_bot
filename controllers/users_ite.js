@@ -69,10 +69,9 @@ const userSearch = async (req = request, res = response) => {
         if (resPersonaSistemaITE.length === 0) {
             return res.status(404).json({result: 'El usuario no existe, debe inscribirse en ITE'});
         }
-
-        const resChatbotITE = await Profile.findByPk(username);
+        const resChatbotITE = await User.findOne({where: {username:username}});
         if (resChatbotITE) {//Si existe el objeto en Profile
-            return res.status(200).json({result: resChatbotITE});
+            return res.status(200).json({result: await resChatbotITE.getProfile() });
         } else {//Si no existe el objeto en Profile
             return res.status(202).json({
                 result: resPersonaSistemaITE,
