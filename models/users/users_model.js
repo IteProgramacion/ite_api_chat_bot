@@ -1,4 +1,4 @@
-const {DataTypes, Model} = require("sequelize");
+const {DataTypes, Model,UUIDV4} = require("sequelize");
 const dbChatbotAiITE = require('../../db/db_chatbot_ai_ite_connection');
 const Profile = require("./profile_model");
 const Payments = require("../payments_credits_consumption/pyments_model");
@@ -8,6 +8,11 @@ class User extends Model {
 }
 
 User.init({
+    uid:{
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
+        primaryKey:true
+    },
     username: {
         type: DataTypes.STRING,
         unique:true,

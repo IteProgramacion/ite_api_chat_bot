@@ -8,7 +8,7 @@ class Credits extends Model {
 Credits.init({
     amount: {
         type: DataTypes.DOUBLE,
-        default: 0.0
+        defaultValue: 0.0
     }
 }, {
     sequelize: dbChatbotAiITE,

@@ -2,7 +2,7 @@ const {response, request} = require('express');
 const dbSistemaite = require("../db/db_sistema_ite_connection");
 const User = require("../models/users/users_model");
 const Profile = require("../models/users/profile_model");
-
+const Credits = require("../models/payments_credits_consumption/credits_model");
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
     try {
@@ -95,14 +95,10 @@ const userSearch = async (req = request, res = response) => {
 const userRegister = async (req = request, res = response) => {
     const {profile, password} = req.body;
     try {
-        /// TODO: Falta acomodar los valos para el Create en funcion del modelo Profile
-        console.log(`Profile: ${JSON.stringify(req.body["profile"].id, null, 2)}`)
-
         const resCreateUser = await User.create({
             username: profile.id,
             password: password,
         });
-                console.log('****************************despues de User.create: ' + resCreateUser);
         const resCreateProfile = await Profile.create({
             nombre: profile.nombre,
             apellidop: profile.apellidop,
@@ -113,13 +109,14 @@ const userRegister = async (req = request, res = response) => {
             habilitado: profile.habilitado,
             isIte: true,
         });
-        console.log('****************************despues de Profile.create: ' + resCreateProfile);
         await resCreateUser.setProfile(resCreateProfile);
+        const credit = await Credits.create();
+        credit.setUser(resCreateUser);
 
         res.status(200).json({result: await resCreateUser, profile: await resCreateUser.getProfile()})
     } catch (e) {
         if (e.name==='SequelizeUniqueConstraintError') {
-            res.status(409).json({result: 'El registro '+ profile.id + ' ya existe en la base de datos'});
+            res.status(409).json({result: 'El nombre de usuario '+ profile.id + ' ya existe en la base de datos'});
             return;
 
         }

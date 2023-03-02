@@ -1,6 +1,7 @@
 const {request, response} = require('express');
 const Profile = require('../models/users/profile_model')
 const User = require('../models/users/users_model')
+const Credits = require("../models/payments_credits_consumption/credits_model");
 
 const registerUser = async (req = request, res = response) => {
     /**
@@ -24,6 +25,8 @@ const registerUser = async (req = request, res = response) => {
                 isIte: false,
             });
             await user.setProfile(userProfile);
+            const credit = await Credits.create();
+            credit.setUser(user);
             const resUser = await User.findOne({where: {username: username}, include: [{model: Profile}]});
             return res.status(200).json({result: resUser});
         }
