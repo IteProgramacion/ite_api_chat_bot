@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {iniciarSesion, userSearch, userRegister, userLogin} = require("../controllers/users_ite");
+const {iniciarSesion, userSearch, userRegister, userLogin} = require("../../controllers/users/users_ite");
 const router = Router();
 
 router.post('/', iniciarSesion);

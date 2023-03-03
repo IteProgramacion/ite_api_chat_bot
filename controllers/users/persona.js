@@ -1,5 +1,5 @@
 const {response, request} = require('express');
-const dbSistemaite = require("../db/db_sistema_ite_connection");
+const dbSistemaite = require("../../db/db_sistema_ite_connection");
 
 
 const personaGet = async (req = request, res = response) => {

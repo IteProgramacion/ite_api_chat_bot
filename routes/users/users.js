@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {listUsers, registerUser, userLogin} = require("../controllers/users");
+const {listUsers, registerUser, userLogin} = require("../../controllers/users/users");
 const router = Router();
 
 router.post('/listUser', listUsers);

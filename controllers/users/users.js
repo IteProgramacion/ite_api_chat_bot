@@ -1,7 +1,7 @@
 const {request, response} = require('express');
-const Profile = require('../models/users/profile_model')
-const User = require('../models/users/users_model')
-const Credits = require("../models/payments_credits_consumption/credits_model");
+const Profile = require('../../models/users/profile_model')
+const User = require('../../models/users/users_model')
+const Credits = require("../../models/payments_credits_consumption/credits_model");
 
 const registerUser = async (req = request, res = response) => {
     /**

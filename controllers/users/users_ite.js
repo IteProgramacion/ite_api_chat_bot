@@ -1,8 +1,8 @@
 const {response, request} = require('express');
-const dbSistemaite = require("../db/db_sistema_ite_connection");
-const User = require("../models/users/users_model");
-const Profile = require("../models/users/profile_model");
-const Credits = require("../models/payments_credits_consumption/credits_model");
+const dbSistemaite = require("../../db/db_sistema_ite_connection");
+const User = require("../../models/users/users_model");
+const Profile = require("../../models/users/profile_model");
+const Credits = require("../../models/payments_credits_consumption/credits_model");
 const iniciarSesion = async (req = request, res = response) => {
     const {username, password} = req.body;
     try {

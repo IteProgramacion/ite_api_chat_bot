@@ -5,7 +5,7 @@ const {
     personaPost,
     personaDelete,
     personaPatch
-} = require("../controllers/persona");
+} = require("../../controllers/users/persona");
 const router = Router();
 
 router.get('/:id', personaGet);
