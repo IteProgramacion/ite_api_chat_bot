@@ -114,7 +114,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"profile\" : {\r\n            \"id\": 2,\r\n            \"nombre\": \"LIDIA\",\r\n            \"apellidop\": \"CONTRERAS\",\r\n            \"apellidom\": \"CATARI\",\r\n            \"fechanacimiento\": \"2015-05-15\",\r\n            \"carnet\": \"45615535\",\r\n            \"telefono\": \"71039910\",\r\n            \"habilitado\": 1,\r\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n        },\r\n        \"password\": \"123456789\"\r\n}",
+									"raw": "{\r\n    \"profile\" : {\r\n            \"id\": 4,\r\n            \"nombre\": \"LIDIA\",\r\n            \"apellidop\": \"CONTRERAS\",\r\n            \"apellidom\": \"CATARI\",\r\n            \"fechanacimiento\": \"2015-05-15\",\r\n            \"carnet\": \"45615535\",\r\n            \"telefono\": \"71039910\",\r\n            \"habilitado\": 1,\r\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n        },\r\n        \"password\": \"123456789\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -176,7 +176,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": \"username4\",\r\n    \"password\": \"asdasdasdas\",\r\n    \"profile\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"EDSON\",\r\n        \"apellidop\": \"MANCILLA\",\r\n        \"apellidom\": \"RODRIGUEZ\",\r\n        \"fechanacimiento\": \"1991-05-15\",\r\n        \"carnet\": \"812345678\",\r\n        \"telefono\": \"71234567\",\r\n        \"habilitado\": true,\r\n        \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n        \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n    }\r\n}",
+									"raw": "{\r\n    \"username\": \"username5\",\r\n    \"password\": \"asdasdasdas\",\r\n    \"profile\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"EDSON\",\r\n        \"apellidop\": \"MANCILLA\",\r\n        \"apellidom\": \"RODRIGUEZ\",\r\n        \"fechanacimiento\": \"1991-05-15\",\r\n        \"carnet\": \"812345678\",\r\n        \"telefono\": \"71234567\",\r\n        \"habilitado\": true,\r\n        \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n        \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n    }\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -195,7 +195,74 @@
 									]
 								}
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Registrar nuevo usuario",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"username4\",\r\n    \"password\": \"asdasdasdas\",\r\n    \"profile\": {\r\n        \"id\": 2,\r\n        \"nombre\": \"EDSON\",\r\n        \"apellidop\": \"MANCILLA\",\r\n        \"apellidom\": \"RODRIGUEZ\",\r\n        \"fechanacimiento\": \"1991-05-15\",\r\n        \"carnet\": \"812345678\",\r\n        \"telefono\": \"71234567\",\r\n        \"habilitado\": true,\r\n        \"created_at\": \"2022-08-26T19:50:41.000Z\",\r\n        \"updated_at\": \"2022-08-26T20:19:14.000Z\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}api/users/registerUser/",
+											"host": [
+												"{{url}}api"
+											],
+											"path": [
+												"users",
+												"registerUser",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "478"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1de-cwW2pjz9BmU46Z6E8sgojaKfIpA\""
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 02 Mar 2023 18:43:26 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": {\n        \"uid\": \"8640cb0d-970d-4334-b95b-72fe26747534\",\n        \"username\": \"username4\",\n        \"password\": \"asdasdasdas\",\n        \"createdAt\": \"2023-03-02T18:43:26.000Z\",\n        \"updatedAt\": \"2023-03-02T18:43:26.000Z\",\n        \"ProfileId\": 4,\n        \"Profile\": {\n            \"id\": 4,\n            \"nombre\": \"EDSON\",\n            \"apellidop\": \"MANCILLA\",\n            \"apellidom\": \"RODRIGUEZ\",\n            \"fechanacimiento\": \"1991-05-15T00:00:00.000Z\",\n            \"carnet\": \"812345678\",\n            \"telefono\": \"71234567\",\n            \"habilitado\": true,\n            \"isIte\": false,\n            \"createdAt\": \"2023-03-02T18:43:26.000Z\",\n            \"updatedAt\": \"2023-03-02T18:43:26.000Z\"\n        }\n    }\n}"
+								}
+							]
 						},
 						{
 							"name": "Iniciar sesion usuario externo",
@@ -204,7 +271,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":  \"2        \" ,\r\n    \"password\": \"123456789 \"\r\n}",
+									"raw": "{\r\n    \"username\":  \"2        \" ,\r\n    \"password\": \"123456789\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -225,6 +292,43 @@
 							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Payments credits and  consumptions",
+			"item": [
+				{
+					"name": "getCredit",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userUid\": \"306c85f0-452c-40a7-ae66-a7cbdc2a4441\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/assistent/credits/getCredit/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"assistent",
+								"credits",
+								"getCredit",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
