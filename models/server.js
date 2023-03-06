@@ -11,7 +11,7 @@ class Server {
         this.personaApiPath = '/api/persona';
         this.usersApiPath = '/api/users';
         this.iteUsersApiPath = '/api/users/ite';
-        this.iteAssistent = 'api/assistent/credits';
+        this.iteAssistent = '/api/assistent/credits';
 
         this.dbSistemaiteConnection().then(r => console.log('---server.js dbSistemaiteConnection : ' + r));
         this.dbChatbotAiITEConnection().then(r => console.log('------server.js dbChatbotAiITEConnection : ' + r));
