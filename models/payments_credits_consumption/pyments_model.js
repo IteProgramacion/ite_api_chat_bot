@@ -15,8 +15,6 @@ Payments.init({
 
 (async () => {
     try {
-
-
         console.log('Correct Connection Sync Payments')
     } catch (e) {
         throw  new Error('Error to Connection Sync Payments' + e);
