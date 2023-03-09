@@ -13,13 +13,13 @@
 					"name": "Users ITE",
 					"item": [
 						{
-							"name": "Buscar usuario ITE",
+							"name": "Buscar Usuario",
 							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": 2\r\n}",
+									"raw": "{\r\n    \"username\": 2,\r\n    \"profile\": \"asd\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -40,7 +40,7 @@
 							},
 							"response": [
 								{
-									"name": "Buscar usuario ITE",
+									"name": "Buscar Usuario",
 									"originalRequest": {
 										"method": "POST",
 										"header": [],
@@ -65,8 +65,8 @@
 											]
 										}
 									},
-									"status": "Accepted",
-									"code": 202,
+									"status": "OK",
+									"code": 200,
 									"_postman_previewlanguage": "json",
 									"header": [
 										{
@@ -83,15 +83,15 @@
 										},
 										{
 											"key": "Content-Length",
-											"value": "310"
+											"value": "277"
 										},
 										{
 											"key": "ETag",
-											"value": "W/\"136-f+aSHTeNvm/NAQ9WSTtxnllbFX0\""
+											"value": "W/\"115-Dli4CuQrexUHGwfAsvBEQXIONtU\""
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 28 Feb 2023 18:37:54 GMT"
+											"value": "Thu, 09 Mar 2023 14:02:57 GMT"
 										},
 										{
 											"key": "Connection",
@@ -103,7 +103,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"result\": [\n        {\n            \"id\": 2,\n            \"nombre\": \"LIDIA\",\n            \"apellidop\": \"CONTRERAS\",\n            \"apellidom\": \"CATARI\",\n            \"fechanacimiento\": \"2015-05-15\",\n            \"carnet\": \"45615535\",\n            \"telefono\": \"71039910\",\n            \"habilitado\": 1,\n            \"created_at\": \"2022-08-26T19:50:41.000Z\",\n            \"updated_at\": \"2022-08-26T20:19:14.000Z\"\n        }\n    ],\n    \"message\": \"se  debe crear una contraseña para el usuario\"\n}"
+									"body": "{\n    \"result\": {\n        \"id\": 1,\n        \"nombre\": \"LIDIA\",\n        \"apellidop\": \"CONTRERAS\",\n        \"apellidom\": \"CATARI\",\n        \"fechanacimiento\": \"2015-05-15T00:00:00.000Z\",\n        \"carnet\": \"45615535\",\n        \"telefono\": \"71039910\",\n        \"habilitado\": true,\n        \"isIte\": true,\n        \"createdAt\": \"2023-03-02T15:26:01.000Z\",\n        \"updatedAt\": \"2023-03-02T15:26:01.000Z\"\n    }\n}"
 								}
 							]
 						},
@@ -143,7 +143,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\": 2,\r\n    \"password\": \"123456789\"\r\n}",
+									"raw": "{\r\n    \"username\": 2,\r\n    \"password\": \"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -271,7 +271,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":  \"2        \" ,\r\n    \"password\": \"123456789\"\r\n}",
+									"raw": "{\r\n    \"username\":  \"2  d      \" ,\r\n    \"password\": \"123456789\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -316,14 +316,102 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}api/assistent/credits/getCredit/",
+							"raw": "{{url}}api/assistent/credits/getCredit",
 							"host": [
 								"{{url}}api"
 							],
 							"path": [
 								"assistent",
 								"credits",
-								"getCredit",
+								"getCredit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCredit Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userUid\": \"306c85f0-452c-40a7-ae66-a7cbdc2a4441\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/assistent/credits/myTransaction",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"assistent",
+								"credits",
+								"myTransaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Credito consumido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userUid\": \"306c85f0-452c-40a7-ae66-a7cbdc2a4441\",\r\n    \"amount\": 123\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/assistent/credits/creditConsumption/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"assistent",
+								"credits",
+								"creditConsumption",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comprar credito (coins)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userUid\": \"306c85f0-452c-40a7-ae66-a7cbdc2a4441\",\r\n    \"amount\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}api/assistent/credits/buyCredit/",
+							"host": [
+								"{{url}}api"
+							],
+							"path": [
+								"assistent",
+								"credits",
+								"buyCredit",
 								""
 							]
 						}
